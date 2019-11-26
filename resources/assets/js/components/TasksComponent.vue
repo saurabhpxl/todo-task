@@ -1,7 +1,8 @@
 <template>
     <div>
-        <create-task />
-        <ul>
+        <create-task v-on:task-created="addInList($event)" />
+        <p v-if="isError">There is some error in fetching tasks list</p>
+        <ul v-else>
             <li v-for="task in tasks" v-text="task"></li>
         </ul>
     </div>
@@ -15,11 +16,23 @@
       },
       data(){
         return {
-          tasks: ['A', 'B', 'C']
+          tasks: [],
+          isError: false
         }
       },
-      mounted() {
-        console.log('Component mounted.')
+      methods: {
+        addInList(task){
+          this.tasks.unshift(task)
+        }
+      },
+      created() {
+        axios.get('api/tasks')
+          .then(({data}) => {
+            this.tasks = data.tasks
+          })
+          .catch(({response}) => {
+            this.isError = true
+          });
       }
     }
 </script>

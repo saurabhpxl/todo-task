@@ -23,8 +23,9 @@
               task: this.task
             })
               .then(() => {
+                this.$emit('task-created', this.task)
                 this.task = ''
-            })
+              })
               .catch(({response}) => {
                 this.error = response.data.errors.task[0]
               });

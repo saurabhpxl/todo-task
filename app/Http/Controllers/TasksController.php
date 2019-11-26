@@ -14,7 +14,8 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::latest()->get(['name']);
+        $tasks = $tasks->pluck('name');
         return response()->json(['status' => 'success', 'tasks' => $tasks]);
     }
 
