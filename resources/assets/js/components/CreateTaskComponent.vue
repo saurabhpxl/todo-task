@@ -1,6 +1,6 @@
 <template>
     <form method="post" @submit.prevent="addTask">
-        <input type="text" placeholder="Add new" v-model="task" v-on:input="error = ''" />
+        <input type="text" placeholder="Add new Task" v-model="task" v-on:input="error = ''" />
         <span v-if="error">{{ error }}</span>
     </form>
 </template>

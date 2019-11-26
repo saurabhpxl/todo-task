@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TasksController extends Controller
@@ -12,7 +13,7 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index() : JsonResponse
     {
         $tasks = Task::latest()->get(['name']);
         $tasks = $tasks->pluck('name');
@@ -24,7 +25,7 @@ class TasksController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request) : JsonResponse
     {
         $request->validate([
             'task' => "required"
@@ -34,6 +35,11 @@ class TasksController extends Controller
         $task->name = $request->task;
         $task->save();
 
-        return response()->json(['status' => 'success']);
+        if($task->save()) {
+            return response()->json(['status' => 'success']);
+        }
+
+        return response()->json(['status' => 'error'], 500);
+
     }
 }
