@@ -1,23 +1,25 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Example Component</div>
-
-                    <div class="panel-body">
-                        I'm an example component!
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div>
+        <create-task />
+        <ul>
+            <li v-for="task in tasks" v-text="task"></li>
+        </ul>
     </div>
 </template>
 
 <script>
+    import CreateTask from "./CreateTaskComponent";
     export default {
-        mounted() {
-            console.log('Component mounted.')
+      components: {
+        CreateTask
+      },
+      data(){
+        return {
+          tasks: ['A', 'B', 'C']
         }
+      },
+      mounted() {
+        console.log('Component mounted.')
+      }
     }
 </script>
